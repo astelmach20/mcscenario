@@ -23,6 +23,8 @@ public final class DatapackWriter {
     public static final String RUN_COMPLETE_MARKER = "[mcscenario] run-complete ";
 
     static final String NAMESPACE = "mcscenario";
+    /** Where the pack lives, relative to the world folder. */
+    public static final String PACK_PATH = "datapacks/" + NAMESPACE;
 
     /** Pre-1.21 servers read the plural directory names, 1.21+ the singular ones. */
     private static final List<String> FUNCTION_DIRS = List.of("function", "functions");
@@ -43,7 +45,7 @@ public final class DatapackWriter {
         String slug = slug(name);
         Map<String, String> functions = functions(name, slug, run);
 
-        Path packDir = worldDir.resolve("datapacks").resolve(NAMESPACE);
+        Path packDir = worldDir.resolve(PACK_PATH);
         try {
             if (Files.exists(packDir)) {
                 WorldFiles.deleteRecursively(packDir);
@@ -64,7 +66,7 @@ public final class DatapackWriter {
     }
 
     /** Lowercases {@code runName} and replaces every character outside {@code [a-z0-9_]} with {@code _}. */
-    static String slug(String runName) {
+    public static String slug(String runName) {
         return runName.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9_]", "_");
     }
 

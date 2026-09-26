@@ -49,6 +49,17 @@ class WorldFilesTest {
     }
 
     @Test
+    void resetDeletesWholeWorld() throws IOException {
+        Path world = world();
+        Files.writeString(Files.createDirectories(world.resolve("region")).resolve("r.0.0.mca"), "x");
+
+        assertTrue(WorldFiles.reset(world));
+        assertFalse(Files.exists(world));
+        assertTrue(Files.isDirectory(root));
+        assertFalse(WorldFiles.reset(world));
+    }
+
+    @Test
     void normalizedInsidePathIsAllowed() throws IOException {
         Path world = world();
         Files.writeString(world.resolve("a.dat"), "x");

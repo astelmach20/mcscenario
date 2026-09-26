@@ -31,6 +31,19 @@ public final class WorldFiles {
         return true;
     }
 
+    /**
+     * Deletes the whole world folder so the next run generates a fresh world.
+     *
+     * @return whether the folder existed
+     */
+    public static boolean reset(Path worldDir) {
+        if (!Files.exists(worldDir, LinkOption.NOFOLLOW_LINKS)) {
+            return false;
+        }
+        deleteRecursively(worldDir);
+        return true;
+    }
+
     private static Path resolveInside(Path worldDir, String relativePath) {
         Path base = worldDir.toAbsolutePath().normalize();
         Path target;

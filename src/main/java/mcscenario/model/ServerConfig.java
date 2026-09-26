@@ -35,6 +35,11 @@ public record ServerConfig(
         environment = Map.copyOf(environment);
     }
 
+    public ServerConfig withWorkDir(Path workDir) {
+        return new ServerConfig(workDir, command, runDir, levelName, packFormat, properties, acceptEula, runTimeout,
+            environment);
+    }
+
     public Path resolvedRunDir() {
         return workDir.resolve(runDir).normalize();
     }

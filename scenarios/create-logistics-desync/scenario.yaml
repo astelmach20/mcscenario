@@ -1,0 +1,49 @@
+name: create-logistics-desync
+description: >
+  A stock link's "added" flag is saved in its chunk, but the network's link total is saved separately in
+  world/data/create_logistics.dat. When the two disagree, GlobalLogisticsManager.getUnloadedLinkCount goes
+  permanently negative, which FactoryPanelBehaviour reads as "nothing unloaded" and so disables the
+  waitingForNetwork guard for every factory gauge and stock ticker on that network.
+
+server:
+  workDir: .                 # pass --work-dir <your Create checkout>
+  command: ["./gradlew", "--no-daemon", "runServer"]
+  runDir: run/server
+  levelName: world
+  packFormat: 48             # Minecraft 1.21.1
+  runTimeout: 15m
+  properties:
+    online-mode: false
+
+steps:
+  - resetWorld: true
+  - run:
+      name: setup
+      phases:
+        - after: 1s
+          commands:
+            - forceload add 1007 1000
+        - after: 1s
+          commands:
+            - setblock 1008 10 1000 minecraft:chest
+            - setblock 1007 10 1000 create:packager[facing=west]
+            - setblock 1007 11 1000 create:stock_link[face=floor,facing=north]
+        - after: 1s
+          commands:
+            - item replace block 1008 10 1000 container.0 with minecraft:cobblestone 64
+      hold: 10s
+  - deleteWorldFile: data/create_logistics.dat
+  - run:
+      name: reload
+      hold: 30s
+
+probes:
+  unloaded: '\[DBG\] t=\d+ net=\w+ total=\d+ loaded=\d+ unloaded=(?<value>-?\d+)'
+
+assertions:
+  - run: reload
+    probe: unloaded
+    all: ">= 0"
+  - run: reload
+    probe: unloaded
+    count: ">= 100"

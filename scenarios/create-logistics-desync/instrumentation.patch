@@ -1,0 +1,27 @@
+From db3a4f17b192ecdc5b7c88fd92a883a8171b362f Mon Sep 17 00:00:00 2001
+From: astelmach20 <astelmach20@gmail.com>
+Date: Sat, 26 Sep 2026 12:02:30 -0400
+Subject: [PATCH] Log logistics network link counts every tick
+
+---
+ .../logistics/packagerLink/GlobalLogisticsManager.java        | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/main/java/com/simibubi/create/content/logistics/packagerLink/GlobalLogisticsManager.java b/src/main/java/com/simibubi/create/content/logistics/packagerLink/GlobalLogisticsManager.java
+index 2198d16..aac2fbf 100644
+--- a/src/main/java/com/simibubi/create/content/logistics/packagerLink/GlobalLogisticsManager.java
++++ b/src/main/java/com/simibubi/create/content/logistics/packagerLink/GlobalLogisticsManager.java
+@@ -110,6 +110,10 @@ public class GlobalLogisticsManager {
+ 		logisticsNetworks.forEach((id, network) -> {
+ 			network.panelPromises.tick();
+ 		});
++		logisticsNetworks.forEach((id, network) -> com.simibubi.create.Create.LOGGER.info(
++			"[DBG] t={} net={} total={} loaded={} unloaded={} stock={}", level.getGameTime(),
++			id.toString().substring(0, 8), network.totalLinks.size(), network.loadedLinks.size(),
++			getUnloadedLinkCount(id), LogisticsManager.getSummaryOfNetwork(id, true).getTotalCount()));
+ 	}
+ 
+ 	public void markDirty() {
+-- 
+2.54.0.windows.1
+
