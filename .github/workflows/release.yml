@@ -18,7 +18,8 @@ jobs:
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
       - name: Check tag matches project version
-        run: test "v$(./gradlew -q properties --property version | sed -n 's/^version: //p')" = "$GITHUB_REF_NAME"
+        run: |
+          test "v$(./gradlew -q properties --property version | sed -n 's/^version: //p')" = "$GITHUB_REF_NAME"
       - run: ./gradlew test distZip distTar
       - run: gh release create "$GITHUB_REF_NAME" build/distributions/* --title "$GITHUB_REF_NAME" --generate-notes
         env:
