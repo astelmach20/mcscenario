@@ -36,14 +36,20 @@ assertions:
 
 The full version is in [scenarios/create-logistics-desync](scenarios/create-logistics-desync).
 
-## Usage
+## Install
 
-Requires Java 21.
+Requires Java 21. Download `mcscenario-<version>.zip` from [Releases](https://github.com/astelmach20/mcscenario/releases), unzip it, and put its `bin` folder on your `PATH`.
 
 ```bash
-./gradlew installDist
-build/install/mcscenario/bin/mcscenario validate scenario.yaml
-build/install/mcscenario/bin/mcscenario run scenario.yaml --work-dir /path/to/your/mod --out results
+mcscenario validate scenario.yaml
+mcscenario run scenario.yaml --work-dir /path/to/your/mod --out results
+```
+
+To use it as a library, get it from [JitPack](https://jitpack.io/#astelmach20/mcscenario):
+
+```kotlin
+repositories { maven("https://jitpack.io") }
+dependencies { testImplementation("com.github.astelmach20:mcscenario:v0.1.0") }
 ```
 
 Exit codes: `0` passed, `1` an assertion or run failed, `2` invalid scenario or usage, `3` the scenario could not run. Each run's full server log and a JSON report are written to `--out`.

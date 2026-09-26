@@ -1,10 +1,11 @@
 plugins {
     `java-library`
+    `maven-publish`
     application
 }
 
 group = "io.github.astelmach20"
-version = "0.1.0-SNAPSHOT"
+version = "0.1.0"
 
 java {
     toolchain {
@@ -28,6 +29,20 @@ dependencies {
 application {
     mainClass = "mcscenario.Main"
     applicationName = "mcscenario"
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
+}
+
+tasks.jar {
+    manifest {
+        attributes("Implementation-Title" to project.name, "Implementation-Version" to project.version)
+    }
 }
 
 tasks.test {

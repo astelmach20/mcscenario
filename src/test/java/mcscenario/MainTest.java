@@ -33,6 +33,12 @@ class MainTest {
     }
 
     @Test
+    void printsVersion() {
+        assertEquals(Main.EXIT_PASSED, main("--version"));
+        assertTrue(out.toString(StandardCharsets.UTF_8).startsWith("mcscenario "));
+    }
+
+    @Test
     void unknownCommandIsUsageError() {
         assertEquals(Main.EXIT_USAGE, main("frobnicate"));
     }

@@ -22,6 +22,7 @@ public final class Main {
     private static final String USAGE = """
         usage: mcscenario run <scenario.yaml> [--out <dir>] [--work-dir <dir>]
                mcscenario validate <scenario.yaml>
+               mcscenario --version
 
         exit codes: 0 passed, 1 assertions or runs failed, 2 bad usage or invalid scenario, 3 could not run
         """;
@@ -34,6 +35,11 @@ public final class Main {
     }
 
     static int run(List<String> args, PrintStream out, PrintStream err) {
+        if (args.equals(List.of("--version"))) {
+            String version = Main.class.getPackage().getImplementationVersion();
+            out.println("mcscenario " + (version == null ? "dev" : version));
+            return EXIT_PASSED;
+        }
         if (args.isEmpty() || args.contains("-h") || args.contains("--help")) {
             (args.isEmpty() ? err : out).print(USAGE);
             return args.isEmpty() ? EXIT_USAGE : EXIT_PASSED;
