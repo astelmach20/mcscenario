@@ -17,4 +17,8 @@ public sealed interface Step {
     /** Deletes a file or directory under the world folder, e.g. to simulate lost or rolled-back saved data. */
     record DeleteWorldFile(String path) implements Step {
     }
+
+    /** Deletes the whole world folder so the next run generates a fresh world. */
+    record ResetWorld() implements Step {
+    }
 }
