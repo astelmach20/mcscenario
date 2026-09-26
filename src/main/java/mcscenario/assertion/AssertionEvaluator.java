@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import mcscenario.model.Assertion;
 import mcscenario.model.Assertion.Quantifier;
+
+import static mcscenario.model.Assertion.formatNumber;
 import mcscenario.model.ProbeMatch;
 
 /** Checks assertions against the probe matches collected from all runs. */
@@ -65,9 +67,5 @@ public final class AssertionEvaluator {
 
     private static String at(ProbeMatch match) {
         return "line " + match.lineNumber() + ": " + formatNumber(match.value().getAsDouble());
-    }
-
-    static String formatNumber(double d) {
-        return d == Math.rint(d) && !Double.isInfinite(d) ? Long.toString((long) d) : Double.toString(d);
     }
 }

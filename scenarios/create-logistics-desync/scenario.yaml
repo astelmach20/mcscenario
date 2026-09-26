@@ -6,7 +6,6 @@ description: >
   waitingForNetwork guard for every factory gauge and stock ticker on that network.
 
 server:
-  workDir: .                 # pass --work-dir <your Create checkout>
   command: ["./gradlew", "--no-daemon", "runServer"]
   runDir: run/server
   levelName: world

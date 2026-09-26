@@ -58,19 +58,20 @@ Before each run, mcscenario writes a datapack into the world whose `#minecraft:l
 
 | Key | Meaning |
 | --- | --- |
-| `server.workDir` | Where `command` runs, relative to the scenario file. `--work-dir` overrides it. |
+| `server.workDir` | Where `command` runs, relative to the scenario file (default: its folder). `--work-dir` overrides it. |
 | `server.command` | Launch command. `./gradlew` resolves to `gradlew.bat` on Windows. |
 | `server.runDir` | Server run directory, relative to `workDir`. |
 | `server.levelName` | World folder name (default `world`). |
-| `server.packFormat` | Data pack format of the target Minecraft version. |
-| `server.runTimeout` | Per-run limit before the process tree is killed. |
+| `server.packFormat` | Data pack format of the target Minecraft version (default 48, i.e. 1.21.1). |
+| `server.runTimeout` | Per-run limit before the process tree is killed, e.g. `90s`, `15m`, `1h` (default `10m`). |
+| `server.acceptEula` | Write `eula=true` (default `false`). |
 | `server.properties` | Entries merged into `server.properties`. |
 | `server.environment` | Extra environment variables. |
-| `steps[].run` | `name`, `phases` (each has `after` and `commands`), and `hold`. Durations take `t` (ticks), `s` or `m`. |
+| `steps[].run` | `name`, `phases` (each has `after` and `commands`, without a leading `/`), and `hold`. `after` and `hold` are ticks: `40`, `40t` or `2s`. |
 | `steps[].deleteWorldFile` | Path inside the world folder to delete between runs. |
 | `steps[].resetWorld` | `true` deletes the world so the next run generates a new one. |
 | `probes` | Name → regex applied to every log line. A `value` named group is parsed as a number. |
-| `assertions` | `run`, `probe`, and one of `all`, `any`, `none` (on values) or `count`, each a comparison such as `">= 0"`. `all` fails if nothing matched. |
+| `assertions` | `run`, `probe`, and one of `all`, `any`, `none` (on values) or `count`, each a comparison such as `">= 0"` (quote it: a bare `>` starts a YAML block). `all` fails if nothing matched. |
 
 ## License
 

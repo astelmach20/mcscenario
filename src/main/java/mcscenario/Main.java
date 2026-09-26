@@ -79,7 +79,7 @@ public final class Main {
             if (arg.equals("--out") && i + 1 < args.size()) {
                 outputDir = Path.of(args.get(++i));
             } else if (arg.equals("--work-dir") && i + 1 < args.size()) {
-                workDir = Path.of(args.get(++i));
+                workDir = Path.of(args.get(++i)).toAbsolutePath().normalize();
             } else if (scenarioFile == null && !arg.startsWith("-")) {
                 scenarioFile = Path.of(arg);
             } else {

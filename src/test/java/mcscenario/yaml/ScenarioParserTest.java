@@ -198,8 +198,12 @@ class ScenarioParserTest {
     }
 
     @Test
+    void workDirDefaultsToScenarioDirectory() {
+        assertEquals(BASE, parse(MINIMAL.replace("  workDir: srv\n", "")).server().workDir());
+    }
+
+    @Test
     void validatesServer() {
-        assertError(MINIMAL.replace("  workDir: srv\n", ""), "server.workDir: required");
         assertError(MINIMAL.replace("command: [run]", "command: []"), "server.command: must not be empty");
         assertError(MINIMAL.replace("command: [run]", "command: [run, ' ']"), "server.command[1]: must not be blank");
         assertError(MINIMAL.replace("command: [run]", "command: run"), "server.command: expected a list");

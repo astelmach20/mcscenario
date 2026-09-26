@@ -54,7 +54,7 @@ class ScenarioRunnerTest {
                   name: first
                   phases:
                     - after: 1s
-                      commands: [say value=5, "/time set day"]
+                      commands: [say value=5, time set day]
                   hold: 1s
               - deleteWorldFile: level.dat
               - run:

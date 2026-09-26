@@ -41,7 +41,8 @@ public record Assertion(String run, String probe, Quantifier quantifier, Compari
         return "%s/%s: %s %s %s".formatted(run, probe, subject, comparison.symbol(), formatNumber(operand));
     }
 
-    static String formatNumber(double d) {
+    /** Formats whole numbers without a trailing {@code .0}. */
+    public static String formatNumber(double d) {
         return d == Math.rint(d) && !Double.isInfinite(d) ? Long.toString((long) d) : Double.toString(d);
     }
 }

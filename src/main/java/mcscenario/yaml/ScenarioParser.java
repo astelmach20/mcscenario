@@ -93,8 +93,9 @@ public final class ScenarioParser {
     }
 
     private static ServerConfig server(MapNode server, Path baseDir) {
-        Node workDirNode = server.required("workDir");
-        Path workDir = baseDir.resolve(path(workDirNode, workDirNode.nonBlankString())).toAbsolutePath().normalize();
+        Node workDirNode = server.get("workDir");
+        String workDirValue = workDirNode.isAbsent() ? "." : workDirNode.nonBlankString();
+        Path workDir = baseDir.resolve(path(workDirNode, workDirValue)).toAbsolutePath().normalize();
 
         List<Node> commandNodes = server.required("command").list();
         if (commandNodes.isEmpty()) {
